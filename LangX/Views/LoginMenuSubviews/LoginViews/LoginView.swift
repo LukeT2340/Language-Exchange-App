@@ -70,11 +70,6 @@ struct LoginView: View {
                     .cornerRadius(8)
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal)
-                
-                if !authManager.errorMessage.isEmpty {
-                    Text(authManager.errorMessage)
-                        .foregroundColor(.red)
-                }
 
                 HStack {
                     Spacer()
@@ -137,7 +132,7 @@ struct LoginView: View {
                     
                     // Register Button with Right Arrow
                     Button(action: {
-                        authManager.login(email: email, password: password)
+                        authManager.emailLogin(email: email, password: password)
                     }) {
                         if !authManager.isLoggingIn {
                             Label(
@@ -165,9 +160,6 @@ struct LoginView: View {
                     self.hideKeyboard()
                 }
                 )
-            .onAppear {
-                self.authManager.errorMessage = ""
-            }
             .navigationBarBackButtonHidden(true)
     }
     private func hideKeyboard() {

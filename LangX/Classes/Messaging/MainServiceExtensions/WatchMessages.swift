@@ -92,7 +92,7 @@ extension MainService {
                                     linkType: .message,
                                     timeStamp: Date(),
                                     otherUserId: otherUserId,
-                                    imageURL: user.compressedProfileImageUrl
+                                    imageURL: user.profileImageUrl
                                 ))
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                     self.banners.removeFirst()

@@ -9,13 +9,13 @@ import SwiftUI
 
 struct SetupAccountView: View {
     @EnvironmentObject var authManager: AuthManager
-    @StateObject var setupViewModel = SetupViewModel(authManager: AuthManager())
+    @StateObject var setupAccountModel = SetupAccountModel(authManager: AuthManager())
 
     
     var body: some View {
         NavigationStack {
             //UsernameSetupView(setupViewModel: setupViewModel)
-            BirthdaySetupView(setupViewModel: setupViewModel)
+            SexAndBirthdaySetupView(setupAccountModel: setupAccountModel)
         }
     }
 }

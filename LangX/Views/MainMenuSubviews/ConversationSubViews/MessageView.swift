@@ -69,7 +69,7 @@ struct MessageView: View {
     @ViewBuilder
     private var profilePicture: some View {
         NavigationLink(destination: ProfileView(mainService: mainService, user: isCurrentUser ? clientUser : otherUser)) {
-            AsyncImageView(url: isCurrentUser ? clientUser.compressedProfileImageUrl : otherUser.compressedProfileImageUrl)
+            AsyncImageView(url: isCurrentUser ? clientUser.profileImageUrl : otherUser.profileImageUrl)
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 44, height: 44)
                 .clipped()
@@ -86,7 +86,7 @@ struct MessageView: View {
             } else if message.messageType == .text {
                 textMessageBubble
             } else if message.messageType == .audio {
-                audio
+                audioMessageBubble
             } else if message.messageType == .image {
                 image
             } else if message.messageType == .video {
@@ -124,7 +124,7 @@ struct MessageView: View {
         HStack {
             if isLastMessage && otherUser.isTyping {
 
-                AsyncImageView(url: isCurrentUser ? clientUser.compressedProfileImageUrl : otherUser.compressedProfileImageUrl)
+                AsyncImageView(url: isCurrentUser ? clientUser.profileImageUrl : otherUser.profileImageUrl)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 44, height: 44)
                     .clipped()
@@ -155,7 +155,7 @@ struct MessageView: View {
                         .italic()
                         .foregroundColor(Color.accentColor)
                 case true:
-                    AsyncImageView(url: otherUser.compressedProfileImageUrl)
+                    AsyncImageView(url: otherUser.profileImageUrl)
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 16, height: 16)
                         .clipped()
@@ -172,7 +172,7 @@ struct MessageView: View {
         .animation(.easeInOut, value: message.hasBeenRead)
     }
     
-    private var audio: some View {
+    private var audioMessageBubble: some View {
         VStack {
             HStack {
                 Image(systemName: voicePlayer.playingMessageId == message.id ? "speaker.wave.2.fill" : "speaker.fill")
@@ -199,8 +199,8 @@ struct MessageView: View {
         .padding(12)
         .background(
             colorScheme == .dark
-            ? (isCurrentUser ? Color(red: 44/255, green: 150/255, blue: 255/255) : .white.opacity(0.2))
-            : (isCurrentUser ? Color(red: 44/255, green: 150/255, blue: 255/255) : .white)
+            ? (isCurrentUser ? Color.accentColor : .white.opacity(0.2))
+            : (isCurrentUser ? Color.accentColor : .white)
         )
         .foregroundColor(isCurrentUser ? .white : (colorScheme == .dark ? .white : .black))
         .cornerRadius(12)
@@ -395,8 +395,8 @@ struct MessageView: View {
         .padding(12)
         .background(
             colorScheme == .dark
-            ? (isCurrentUser ? Color(red: 44/255, green: 150/255, blue: 255/255) : .white.opacity(0.2))
-            : (isCurrentUser ? Color(red: 44/255, green: 150/255, blue: 255/255) : .white)
+            ? (isCurrentUser ? Color.accentColor : .white.opacity(0.2))
+            : (isCurrentUser ? Color.accentColor : .white)
         )
         .foregroundColor(isCurrentUser ? .white : (colorScheme == .dark ? .white : .black))
         .cornerRadius(12)

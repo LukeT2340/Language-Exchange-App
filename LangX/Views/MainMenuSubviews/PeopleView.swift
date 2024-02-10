@@ -168,7 +168,7 @@ struct UserRow: View {
             // User image
             ZStack(alignment: .bottomTrailing) {
                 // User image
-                AsyncImageView(url: user.compressedProfileImageUrl)
+                AsyncImageView(url: user.profileImageUrl)
                     .aspectRatio(contentMode: .fill) // This will fill the frame and may clip the image
                     .frame(width: 70, height: 70)
                     .clipped() // This will clip the overflow if the image's aspect ratio doesn't match the frame

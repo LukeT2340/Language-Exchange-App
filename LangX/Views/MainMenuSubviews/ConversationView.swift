@@ -6,9 +6,11 @@ struct ConversationsView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showingAddFriendSheet = false
     @State private var manualRefreshToggle = false
-    
+    @State private var searchText = ""
     var body: some View {
         VStack {
+            navigationBar
+            /*
             HStack {
                 // Left Icon
                 Image("Icon")
@@ -58,6 +60,7 @@ struct ConversationsView: View {
                     .foregroundColor(Color.gray),
                 alignment: .bottom
             )
+             */
             VStack {
                 List {
                     RandomConversationRow(mainService: mainService)
@@ -119,6 +122,52 @@ struct ConversationsView: View {
         .onChange(of: mainService.otherUsers) { _ in
             self.manualRefreshToggle.toggle()
         }
+    }
+    private var navigationBar: some View {
+        VStack {
+            ZStack {
+                HStack {
+                    
+                    Text(LocalizedStringKey("Edit"))
+                        .foregroundColor(.accentColor)
+                    Spacer()
+                    Image(systemName: "square.and.pencil")
+                        .foregroundColor(.accentColor)
+                        .font(.system(size: 20))
+                }
+                // Conditional Content (App Name or Progress View)
+                if mainService.hasSetupCompleted {
+                    Text(NSLocalizedString("Chats", comment: "Chats"))
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .center) // Align text to the center of its frame
+                } else {
+                    HStack {
+                        Text(NSLocalizedString("Loading-Messages", comment: "Loading messages"))
+                            .font(.subheadline)
+                            .foregroundColor(.primary)
+                            .bold()
+                        LoadingView()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center) // Center the progress view and text together
+                }
+            }
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                TextField(LocalizedStringKey("Search for messages or users"), text: $searchText)
+                    .simultaneousGesture(TapGesture().onEnded {
+                        // This gesture will not interfere with the text field
+                    }
+                    )
+            }
+            .padding(10)
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(15)
+        }
+        .padding(.horizontal)
+        .padding(.top)
     }
 }
 

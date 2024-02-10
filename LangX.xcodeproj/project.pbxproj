@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8CB9D6702B7611E5007FE449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CB9D66F2B7611E5007FE449 /* GoogleService-Info.plist */; };
+		8CB9D6742B761A25007FE449 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB9D6732B761A25007FE449 /* GoogleSignIn */; };
+		8CB9D6762B761A25007FE449 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB9D6752B761A25007FE449 /* GoogleSignInSwift */; };
+		8CB9D6792B776123007FE449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CB9D6782B776123007FE449 /* GoogleService-Info.plist */; };
+		8CB9D67B2B7768C3007FE449 /* SetupAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D67A2B7768C3007FE449 /* SetupAccountModel.swift */; };
+		8CB9D67D2B7768ED007FE449 /* Hobby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D67C2B7768ED007FE449 /* Hobby.swift */; };
+		8CB9D6822B776C27007FE449 /* NativeLanguageSelectableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D67F2B776C27007FE449 /* NativeLanguageSelectableRow.swift */; };
+		8CB9D6832B776C27007FE449 /* TargetLanguageSelectableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D6812B776C27007FE449 /* TargetLanguageSelectableRow.swift */; };
 		8CE530DE2B51DFF0003F9DF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CE530DD2B51DFF0003F9DF9 /* Assets.xcassets */; };
 		8CE530E22B51DFF0003F9DF9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CE530E12B51DFF0003F9DF9 /* Preview Assets.xcassets */; };
 		8CE5314E2B51E06B003F9DF9 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE530EA2B51E06B003F9DF9 /* Conversation.swift */; };
@@ -46,7 +52,6 @@
 		8CE531742B51E06B003F9DF9 /* HandleVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531132B51E06B003F9DF9 /* HandleVideos.swift */; };
 		8CE531752B51E06B003F9DF9 /* WatchConversations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531142B51E06B003F9DF9 /* WatchConversations.swift */; };
 		8CE531762B51E06B003F9DF9 /* handleTyping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531152B51E06B003F9DF9 /* handleTyping.swift */; };
-		8CE531772B51E06B003F9DF9 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531162B51E06B003F9DF9 /* SetupViewModel.swift */; };
 		8CE531782B51E06B003F9DF9 /* MessageHelperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531172B51E06B003F9DF9 /* MessageHelperModel.swift */; };
 		8CE531792B51E06B003F9DF9 /* LangX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531182B51E06B003F9DF9 /* LangX.swift */; };
 		8CE5317A2B51E06B003F9DF9 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE5311A2B51E06B003F9DF9 /* MainMenuView.swift */; };
@@ -55,9 +60,8 @@
 		8CE5317D2B51E06B003F9DF9 /* CallUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE5311F2B51E06B003F9DF9 /* CallUIView.swift */; };
 		8CE5317E2B51E06B003F9DF9 /* BioSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531212B51E06B003F9DF9 /* BioSetupView.swift */; };
 		8CE5317F2B51E06B003F9DF9 /* LanguageGoalsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531222B51E06B003F9DF9 /* LanguageGoalsSetupView.swift */; };
-		8CE531802B51E06B003F9DF9 /* SexSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531232B51E06B003F9DF9 /* SexSetupView.swift */; };
+		8CE531802B51E06B003F9DF9 /* SexAndBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531232B51E06B003F9DF9 /* SexAndBirthdayView.swift */; };
 		8CE531812B51E06B003F9DF9 /* NativeLanguageSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531242B51E06B003F9DF9 /* NativeLanguageSetupView.swift */; };
-		8CE531822B51E06B003F9DF9 /* BirthdaySetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531252B51E06B003F9DF9 /* BirthdaySetupView.swift */; };
 		8CE531832B51E06B003F9DF9 /* UsernameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531262B51E06B003F9DF9 /* UsernameSetupView.swift */; };
 		8CE531842B51E06B003F9DF9 /* TargetLanguageSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531272B51E06B003F9DF9 /* TargetLanguageSetupView.swift */; };
 		8CE531852B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531282B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift */; };
@@ -107,7 +111,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8CB9D66F2B7611E5007FE449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8CB9D6772B761EE9007FE449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8CB9D6782B776123007FE449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8CB9D67A2B7768C3007FE449 /* SetupAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetupAccountModel.swift; path = ../../../SpeakSwap/SpeakSwap/Classes/SetupAccountModel.swift; sourceTree = "<group>"; };
+		8CB9D67C2B7768ED007FE449 /* Hobby.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hobby.swift; sourceTree = "<group>"; };
+		8CB9D67F2B776C27007FE449 /* NativeLanguageSelectableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeLanguageSelectableRow.swift; sourceTree = "<group>"; };
+		8CB9D6812B776C27007FE449 /* TargetLanguageSelectableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetLanguageSelectableRow.swift; sourceTree = "<group>"; };
 		8CE530D62B51DFEE003F9DF9 /* LangX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LangX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CE530DD2B51DFF0003F9DF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8CE530DF2B51DFF0003F9DF9 /* LangX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LangX.entitlements; sourceTree = "<group>"; };
@@ -149,7 +158,6 @@
 		8CE531132B51E06B003F9DF9 /* HandleVideos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleVideos.swift; sourceTree = "<group>"; };
 		8CE531142B51E06B003F9DF9 /* WatchConversations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConversations.swift; sourceTree = "<group>"; };
 		8CE531152B51E06B003F9DF9 /* handleTyping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = handleTyping.swift; sourceTree = "<group>"; };
-		8CE531162B51E06B003F9DF9 /* SetupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
 		8CE531172B51E06B003F9DF9 /* MessageHelperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHelperModel.swift; sourceTree = "<group>"; };
 		8CE531182B51E06B003F9DF9 /* LangX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangX.swift; sourceTree = "<group>"; };
 		8CE5311A2B51E06B003F9DF9 /* MainMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
@@ -158,9 +166,8 @@
 		8CE5311F2B51E06B003F9DF9 /* CallUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallUIView.swift; sourceTree = "<group>"; };
 		8CE531212B51E06B003F9DF9 /* BioSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BioSetupView.swift; sourceTree = "<group>"; };
 		8CE531222B51E06B003F9DF9 /* LanguageGoalsSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageGoalsSetupView.swift; sourceTree = "<group>"; };
-		8CE531232B51E06B003F9DF9 /* SexSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SexSetupView.swift; sourceTree = "<group>"; };
+		8CE531232B51E06B003F9DF9 /* SexAndBirthdayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SexAndBirthdayView.swift; sourceTree = "<group>"; };
 		8CE531242B51E06B003F9DF9 /* NativeLanguageSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeLanguageSetupView.swift; sourceTree = "<group>"; };
-		8CE531252B51E06B003F9DF9 /* BirthdaySetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BirthdaySetupView.swift; sourceTree = "<group>"; };
 		8CE531262B51E06B003F9DF9 /* UsernameSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameSetupView.swift; sourceTree = "<group>"; };
 		8CE531272B51E06B003F9DF9 /* TargetLanguageSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetLanguageSetupView.swift; sourceTree = "<group>"; };
 		8CE531282B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HobbiesAndInterestsSetupView.swift; sourceTree = "<group>"; };
@@ -208,6 +215,8 @@
 				8CE531B42B51E235003F9DF9 /* FirebaseMessaging in Frameworks */,
 				8CE531B92B51E25D003F9DF9 /* Kingfisher in Frameworks */,
 				8CE531AE2B51E235003F9DF9 /* FirebaseFirestore in Frameworks */,
+				8CB9D6762B761A25007FE449 /* GoogleSignInSwift in Frameworks */,
+				8CB9D6742B761A25007FE449 /* GoogleSignIn in Frameworks */,
 				8CE531B22B51E235003F9DF9 /* FirebaseFunctions in Frameworks */,
 				8CE531B62B51E235003F9DF9 /* FirebaseStorage in Frameworks */,
 				8CE531AA2B51E235003F9DF9 /* FirebaseDatabase in Frameworks */,
@@ -233,10 +242,26 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		8CB9D67E2B776C27007FE449 /* NativeLanguageSetupSubViews */ = {
+			isa = PBXGroup;
+			children = (
+				8CB9D67F2B776C27007FE449 /* NativeLanguageSelectableRow.swift */,
+			);
+			path = NativeLanguageSetupSubViews;
+			sourceTree = "<group>";
+		};
+		8CB9D6802B776C27007FE449 /* TargetLanguageSetupSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				8CB9D6812B776C27007FE449 /* TargetLanguageSelectableRow.swift */,
+			);
+			path = TargetLanguageSetupSubviews;
+			sourceTree = "<group>";
+		};
 		8CE530CD2B51DFEE003F9DF9 = {
 			isa = PBXGroup;
 			children = (
-				8CB9D66F2B7611E5007FE449 /* GoogleService-Info.plist */,
+				8CB9D6782B776123007FE449 /* GoogleService-Info.plist */,
 				8CE531C62B51E958003F9DF9 /* Localizable.strings */,
 				8CE530D82B51DFEE003F9DF9 /* LangX */,
 				8CE530D72B51DFEE003F9DF9 /* Products */,
@@ -254,6 +279,7 @@
 		8CE530D82B51DFEE003F9DF9 /* LangX */ = {
 			isa = PBXGroup;
 			children = (
+				8CB9D6772B761EE9007FE449 /* Info.plist */,
 				8CB9D6712B76138E007FE449 /* Utilities */,
 				8CE530F42B51E06B003F9DF9 /* Classes */,
 				8CE531492B51E06B003F9DF9 /* Modifiers */,
@@ -279,6 +305,7 @@
 		8CE530E92B51E06B003F9DF9 /* Tables */ = {
 			isa = PBXGroup;
 			children = (
+				8CB9D67C2B7768ED007FE449 /* Hobby.swift */,
 				8CE530EA2B51E06B003F9DF9 /* Conversation.swift */,
 				8CE530EB2B51E06B003F9DF9 /* NoteComment.swift */,
 				8CE530EC2B51E06B003F9DF9 /* Message.swift */,
@@ -304,7 +331,7 @@
 				8CE531C72B51ED05003F9DF9 /* AuthManager.swift */,
 				8CE531042B51E06B003F9DF9 /* ReplyService.swift */,
 				8CE531052B51E06B003F9DF9 /* Messaging */,
-				8CE531162B51E06B003F9DF9 /* SetupViewModel.swift */,
+				8CB9D67A2B7768C3007FE449 /* SetupAccountModel.swift */,
 				8CE531172B51E06B003F9DF9 /* MessageHelperModel.swift */,
 			);
 			path = Classes;
@@ -378,11 +405,12 @@
 		8CE531202B51E06B003F9DF9 /* SetupAccountSubviews */ = {
 			isa = PBXGroup;
 			children = (
+				8CE531232B51E06B003F9DF9 /* SexAndBirthdayView.swift */,
 				8CE531212B51E06B003F9DF9 /* BioSetupView.swift */,
+				8CB9D67E2B776C27007FE449 /* NativeLanguageSetupSubViews */,
+				8CB9D6802B776C27007FE449 /* TargetLanguageSetupSubviews */,
 				8CE531222B51E06B003F9DF9 /* LanguageGoalsSetupView.swift */,
-				8CE531232B51E06B003F9DF9 /* SexSetupView.swift */,
 				8CE531242B51E06B003F9DF9 /* NativeLanguageSetupView.swift */,
-				8CE531252B51E06B003F9DF9 /* BirthdaySetupView.swift */,
 				8CE531262B51E06B003F9DF9 /* UsernameSetupView.swift */,
 				8CE531272B51E06B003F9DF9 /* TargetLanguageSetupView.swift */,
 				8CE531282B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift */,
@@ -511,6 +539,8 @@
 				8CE531B82B51E25D003F9DF9 /* Kingfisher */,
 				8CE531BB2B51E27A003F9DF9 /* TLPhotoPicker */,
 				8CE531BE2B51E291003F9DF9 /* SlidingTabView */,
+				8CB9D6732B761A25007FE449 /* GoogleSignIn */,
+				8CB9D6752B761A25007FE449 /* GoogleSignInSwift */,
 			);
 			productName = LangX;
 			productReference = 8CE530D62B51DFEE003F9DF9 /* LangX.app */;
@@ -534,7 +564,7 @@
 			};
 			buildConfigurationList = 8CE530D12B51DFEE003F9DF9 /* Build configuration list for PBXProject "LangX" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -547,6 +577,7 @@
 				8CE531B72B51E25D003F9DF9 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				8CE531BA2B51E279003F9DF9 /* XCRemoteSwiftPackageReference "TLPhotoPicker" */,
 				8CE531BD2B51E291003F9DF9 /* XCRemoteSwiftPackageReference "SlidingTabView" */,
+				8CB9D6722B761A25007FE449 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 8CE530D72B51DFEE003F9DF9 /* Products */;
 			projectDirPath = "";
@@ -563,8 +594,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CE530E22B51DFF0003F9DF9 /* Preview Assets.xcassets in Resources */,
-				8CB9D6702B7611E5007FE449 /* GoogleService-Info.plist in Resources */,
 				8CE531C42B51E958003F9DF9 /* Localizable.strings in Resources */,
+				8CB9D6792B776123007FE449 /* GoogleService-Info.plist in Resources */,
 				8CE530DE2B51DFF0003F9DF9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,7 +618,6 @@
 				8CE5317F2B51E06B003F9DF9 /* LanguageGoalsSetupView.swift in Sources */,
 				8CE531732B51E06B003F9DF9 /* WatchMessages.swift in Sources */,
 				8CE5319C2B51E06B003F9DF9 /* SettingsView.swift in Sources */,
-				8CE531772B51E06B003F9DF9 /* SetupViewModel.swift in Sources */,
 				8CE531912B51E06B003F9DF9 /* ChatView.swift in Sources */,
 				8CE531702B51E06B003F9DF9 /* WatchFollows.swift in Sources */,
 				8CE5317B2B51E06B003F9DF9 /* SplashScreenView.swift in Sources */,
@@ -619,10 +649,11 @@
 				8CE531942B51E06B003F9DF9 /* MessageView.swift in Sources */,
 				8CE5315D2B51E06B003F9DF9 /* KeyboardResponder.swift in Sources */,
 				8CE531712B51E06B003F9DF9 /* Check and Create Conversations.swift in Sources */,
+				8CB9D67D2B7768ED007FE449 /* Hobby.swift in Sources */,
+				8CB9D67B2B7768C3007FE449 /* SetupAccountModel.swift in Sources */,
 				8CE531852B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift in Sources */,
 				8CE531932B51E06B003F9DF9 /* PhoneCallView.swift in Sources */,
 				8CE531672B51E06B003F9DF9 /* ReplyService.swift in Sources */,
-				8CE531822B51E06B003F9DF9 /* BirthdaySetupView.swift in Sources */,
 				8CE5315B2B51E06B003F9DF9 /* VoicePlayer.swift in Sources */,
 				8CE531862B51E06B003F9DF9 /* EmailInputView.swift in Sources */,
 				8CE5316D2B51E06B003F9DF9 /* ModifyMessages.swift in Sources */,
@@ -632,16 +663,18 @@
 				8CE531512B51E06B003F9DF9 /* Reply.swift in Sources */,
 				8CE531A02B51E06B003F9DF9 /* LoginMenuButtonModifier.swift in Sources */,
 				8CE5319D2B51E06B003F9DF9 /* LoginMenuView.swift in Sources */,
-				8CE531802B51E06B003F9DF9 /* SexSetupView.swift in Sources */,
+				8CE531802B51E06B003F9DF9 /* SexAndBirthdayView.swift in Sources */,
 				8CE5315A2B51E06B003F9DF9 /* UserService.swift in Sources */,
 				8CE5318D2B51E06B003F9DF9 /* UsefulViews.swift in Sources */,
 				8CE531C32B51E32D003F9DF9 /* ImageLoader.swift in Sources */,
 				8CE531562B51E06B003F9DF9 /* CommentLike.swift in Sources */,
+				8CB9D6832B776C27007FE449 /* TargetLanguageSelectableRow.swift in Sources */,
 				8CE5317A2B51E06B003F9DF9 /* MainMenuView.swift in Sources */,
 				8CE531522B51E06B003F9DF9 /* User.swift in Sources */,
 				8CE531CA2B51F47F003F9DF9 /* FetchClientUser.swift in Sources */,
 				8CE531922B51E06B003F9DF9 /* RandomConversationRow.swift in Sources */,
 				8CE5316A2B51E06B003F9DF9 /* SendAudioMessages.swift in Sources */,
+				8CB9D6822B776C27007FE449 /* NativeLanguageSelectableRow.swift in Sources */,
 				8CE531662B51E06B003F9DF9 /* SearchHelper.swift in Sources */,
 				8CE531572B51E06B003F9DF9 /* Banner.swift in Sources */,
 				8CE531C82B51ED05003F9DF9 /* AuthManager.swift in Sources */,
@@ -798,6 +831,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LangX/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
@@ -847,6 +881,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LangX/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
@@ -905,6 +940,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8CB9D6722B761A25007FE449 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		8CE531A62B51E235003F9DF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -940,6 +983,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8CB9D6732B761A25007FE449 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CB9D6722B761A25007FE449 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		8CB9D6752B761A25007FE449 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8CB9D6722B761A25007FE449 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		8CE531A72B51E235003F9DF9 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8CE531A62B51E235003F9DF9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

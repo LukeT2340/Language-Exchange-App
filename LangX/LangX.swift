@@ -24,16 +24,18 @@ struct LangX: App {
         WindowGroup {
             mainView
                 .environmentObject(authManager)
-                .animation(.default, value: authManager.isAuthenticated)
-                .animation(.default, value: authManager.isAccountSetup)
-                .animation(.default, value: authManager.isInitializing)
-                .accentColor(Color(red: 44/255, green: 150/255, blue: 255/255))
+                .animation(.default, value: authManager.isUserAuthenticated)
+                .animation(.default, value: authManager.isUserAccountSetupCompleted)
+                .animation(.easeInOut, value: authManager.isAppInitializing)
+                .animation(.easeInOut, value: authManager.isUserAuthenticated)
+                .animation(.easeInOut, value: authManager.isUserAccountSetupCompleted)
+                .accentColor(Color(red: 51/255, green: 200/255, blue: 255/255))
         }
     }
 
     @ViewBuilder
     private var mainView: some View {
-        switch (authManager.isInitializing, authManager.isAuthenticated, authManager.isAccountSetup) {
+        switch (authManager.isAppInitializing, authManager.isUserAuthenticated, authManager.isUserAccountSetupCompleted) {
         case (true, _, _):
             SplashScreenView()
         case (false, true, true):
@@ -87,16 +89,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return
         }
 
-        let usersRef = Firestore.firestore().collection("users").document(userID)
-        usersRef.setData(["fcmToken": token], merge: true) { error in
-            if let error = error {
-                print("Error updating FCM token in Firestore: \(error.localizedDescription)")
+        let db = Firestore.firestore()
+        let usersRef = db.collection("users").document(userID)
+        
+        usersRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                // User document exists, proceed to update the FCM token
+                usersRef.setData(["fcmToken": token], merge: true) { error in
+                    if let error = error {
+                        print("Error updating FCM token in Firestore: \(error.localizedDescription)")
+                    } else {
+                        print("FCM token updated successfully in Firestore.")
+                    }
+                }
             } else {
-                print("FCM token updated successfully in Firestore.")
+                print("User document does not exist. FCM token not updated.")
+                // Handle the case where the user document does not exist.
+                // You might want to create a new document or handle this scenario differently based on your app's logic.
             }
         }
     }
-
     
     // Handle registration error
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

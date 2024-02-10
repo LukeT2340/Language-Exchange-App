@@ -242,14 +242,16 @@ struct ProfileView: View {
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
             }
-            if user.hobbiesAndInterests != "" {
+            if user.hobbiesAndInterests.count != 0 {
                 Text(NSLocalizedString("Hobbies-Interests-Label", comment: "Hobbies and interests label"))
                     .bold()
                     .font(.system(size: 18))
                     .padding(.bottom, 2)
                 
-                Text(user.hobbiesAndInterests)
-                    .font(.system(size: 18))
+                ForEach(user.hobbiesAndInterests, id: \.self) {hobby in
+                    Text(hobby)
+                        .font(.system(size: 18))
+                }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

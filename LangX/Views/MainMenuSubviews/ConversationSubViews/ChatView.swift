@@ -138,11 +138,9 @@ struct ChatView: View {
                     .background(Color.accentColor)
                     .clipShape(Circle())
             }
-                        
-            Spacer()
             
             NavigationLink(destination: ProfileView(mainService: mainService, user: otherUser)) {
-                VStack(alignment: .center) {
+                VStack(alignment: .leading) {
                     Text(otherUser.name)
                         .font(.headline)
                         .foregroundColor(.primary)
@@ -157,6 +155,7 @@ struct ChatView: View {
                             .foregroundColor(lastOnlineText == NSLocalizedString("Online", comment: "Online") ? .green : .gray)
                     }
                 }
+                .padding(.leading)
             }
             
             Spacer()
@@ -176,7 +175,7 @@ struct ChatView: View {
     private var userIntroduction: some View {
         VStack (alignment: .center) {
             NavigationLink(destination: ProfileView(mainService: mainService, user: otherUser)) {
-                AsyncImageView(url: otherUser.compressedProfileImageUrl)
+                AsyncImageView(url: otherUser.profileImageUrl)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 120, height: 120)
                     .clipped()

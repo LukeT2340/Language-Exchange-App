@@ -37,6 +37,13 @@ struct MainMenuView: View {
     var body: some View {
         NavigationView {
             TabView(selection: $mainService.selectedTab) {
+                PeopleView(mainService: mainService, peopleService: peopleService).environmentObject(authManager)
+                    .tabItem {
+                        Image(systemName: "person.2.fill")
+                        Text(NSLocalizedString("Discover", comment: "Discover"))
+                    }
+                    .tag(1)
+                
                 ConversationsView(mainService: mainService).environmentObject(authManager)
                 
                     .tabItem {
@@ -45,15 +52,8 @@ struct MainMenuView: View {
                     }
                     .tag(0)
                     .badge(mainService.totalUnreadMessages)
-                
-            
-                PeopleView(mainService: mainService, peopleService: peopleService).environmentObject(authManager)
-                    .tabItem {
-                        Image(systemName: "person.2.fill")
-                        Text(NSLocalizedString("Discover", comment: "Discover"))
-                    }
-                    .tag(1)
-                 
+
+
                 /*
                  NotesView(noteService: noteService, messageService: messageService, userService: userService).environmentObject(authManager)
                  .tabItem {

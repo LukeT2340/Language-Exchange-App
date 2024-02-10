@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct BioSetupView: View {
-    @ObservedObject var setupViewModel: SetupViewModel
+    @ObservedObject var setupViewModel: SetupAccountModel
     @EnvironmentObject var authManager: AuthManager
     @State private var isAnimating = false
     @State private var activeAlert: ActiveAlert?
@@ -17,7 +17,7 @@ struct BioSetupView: View {
     @Environment(\.presentationMode) var presentationMode
 
     private var bioCharacterCount: Int {
-        setupViewModel.bio.count
+        setupViewModel.userObject.bio.count
     }
 
     private var isBioWithinCharacterLimit: Bool {
@@ -64,7 +64,7 @@ struct BioSetupView: View {
                     .animation(nil)
             }
             
-            TextEditor(text: $setupViewModel.bio)
+            TextEditor(text: $setupViewModel.userObject.bio)
                 .frame(height: 180)
                 .frame(minHeight: 150)
                 .overlay(

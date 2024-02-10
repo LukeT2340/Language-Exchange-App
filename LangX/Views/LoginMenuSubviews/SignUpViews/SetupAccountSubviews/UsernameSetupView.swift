@@ -15,159 +15,228 @@ enum ActiveAlert: Identifiable {
     }
 }
 
-struct UsernameSetupView: View {
-    @ObservedObject var setupViewModel: SetupViewModel
+struct UserNameAndProfilePictureSetupView: View {
+    @ObservedObject var setupAccountModel: SetupAccountModel
     @EnvironmentObject var authManager: AuthManager
     @State private var showingImagePicker = false
     @State private var activeAlert: ActiveAlert?
-    @State private var inputImage: UIImage?
-    @State private var profileImage: Image?
     @State private var isAnimating = false
 
     @State private var errorMessage: String = ""
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
 
+    var validInput: Bool {
+        if setupAccountModel.profileImage == nil {
+            return false
+        }
+        
+        let trimmedUsername = setupAccountModel.userObject.name.replacingOccurrences(of: " ", with: "")
+        
+        if trimmedUsername.isEmpty {
+            return false
+        }
+
+        if trimmedUsername.count < 4 {
+            return false
+        }
+        
+        let allowedCharacterSet = CharacterSet.letters
+        if !trimmedUsername.unicodeScalars.allSatisfy(allowedCharacterSet.contains) {
+            return false
+        }
+        
+        let spacePattern = " {2,}"
+        if let _ = trimmedUsername.range(of: spacePattern, options: .regularExpression) {
+            return false
+        }
+        return true
+    }
+    
     var body: some View {
         VStack {
-            HStack {
-                Image("Icon")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .scaleEffect(isAnimating ? 1.05 : 1.0)
-                    .opacity(isAnimating ? 1.0 : 0.8)
-                    .onAppear() {
-                        withAnimation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
-                            isAnimating.toggle()
-                        }
-                    }
-                    .frame(width: 70)
-                Spacer()
-            }
-            Text(NSLocalizedString("Setup Username and Choose Profile Picture", comment: "Set up your username and profile picture."))
-                .font(.title)
-                .foregroundColor(colorScheme == .dark ? .gray : .black)
-                .padding(.bottom, 30)
-            ZStack {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.1))
-                    .frame(width: 100, height: 100)
-                    .cornerRadius(5)
-                
-                if let profileImage = profileImage {
-                    profileImage
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 100, height: 100)
-                        .cornerRadius(5)
-                        .clipShape(Rectangle())
-                } else {
-                    Text(NSLocalizedString("Select Profile Picture", comment: "Select Profile Picture"))
-                        .foregroundColor(.gray)
-                        .frame(width: 90, height: 90)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                }
-            }
-            .onTapGesture {
-                showingImagePicker = true
-            }
-            
-            // Username TextField
-            TextField("Username", text: $setupViewModel.username)
-                .padding()
-                .background(Color.blue.opacity(0.2)) // Match the button color
-                .cornerRadius(8)
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
+            header
+            profilePicture
+            username
             Spacer()
-            HStack {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "arrow.left") // System-provided name for a left-pointing arrow
-                        Text(NSLocalizedString("Back-Button", comment: "Back button"))
-                    }
-                }
-                .buttonStyle() // Apply any custom button style you have
-                .frame(width: 120)
-                Spacer()
-                // Navigation Link
-                NavigationLink(destination: TargetLanguageSetupView(setupViewModel: setupViewModel)) {
-                    HStack {
-                        Text(NSLocalizedString("Next-Button", comment: "Next button"))
-                        Image(systemName: "arrow.right") // System name for right arrow icon
-                    }
-                }
-                .buttonStyle()
-                .frame(width: 120)
-                .disabled(setupViewModel.username.isEmpty || profileImage == nil || setupViewModel.username.replacingOccurrences(of: " ", with: "").count < 4)
-                .simultaneousGesture(TapGesture().onEnded {
-                    validateInput()
-                })
-            }
-            .simultaneousGesture(TapGesture().onEnded {
-                setupViewModel.profileImage = inputImage // Set the selected image in the ViewModel
-            })
-            .padding()
+            navigationButtons
         }
         .alert(item: $activeAlert) { alertType in
             switch alertType {
-            case .logoutConfirmation:
-                return Alert(
-                    title: Text(NSLocalizedString("Confirm Logout", comment: "Confirm logout")),
-                    message: Text(NSLocalizedString("Are you sure you want to log out?", comment: "Are you sure you want to log out?")),
-                    primaryButton: .destructive(Text(NSLocalizedString("Logout", comment: "Logout"))) {
-                        authManager.logout() { _, _ in}
-                    },
-                    secondaryButton: .cancel()
-                )
             case .inputError:
-                return Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+                return Alert(title: Text(LocalizedStringKey("Error-Alert")), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+            default:
+                return Alert(title: Text(LocalizedStringKey("Unknown-Error-Alert")))
             }
         }
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(isPresented: $showingImagePicker, selectedImage: $inputImage)
+            ImagePicker(isPresented: $showingImagePicker, selectedImage: $setupAccountModel.profileImage)
         }
-        .onChange(of: inputImage) { _ in
-            loadImage()
-        }
-        .background(
-            colorScheme == .dark ?
-                LinearGradient(gradient: Gradient(colors: [Color(red: 0.22, green: 0.22, blue: 0.24), Color(red: 0.28, green: 0.28, blue: 0.30)]), startPoint: .top, endPoint: .bottom) :
-                LinearGradient(gradient: Gradient(colors: [Color(red: 0.95, green: 0.95, blue: 0.98), Color(red: 0.88, green: 0.88, blue: 0.92)]), startPoint: .top, endPoint: .bottom)
+        .padding()
+        .background(colorScheme == .light ?
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.95, green: 0.98, blue: 1.00), // Very light pastel blue
+                    Color(red: 0.85, green: 0.90, blue: 0.95)  // Slightly deeper pastel blue
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            ) : LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.18, green: 0.23, blue: 0.28), // Slightly lighter dark slate blue
+                    Color(red: 0.28, green: 0.33, blue: 0.38)  // A bit lighter and softer slate blue
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
         )
         .gesture(
             TapGesture().onEnded { _ in
                 self.hideKeyboard()
             }
-            )
+        )
         .navigationBarHidden(true)
     }
     
-    func loadImage() {
-        guard let inputImage = inputImage else { return }
-        profileImage = Image(uiImage: inputImage)
+    private var navigationBar: some View {
+        HStack {
+            Image("Icon")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 70)
+                .hidden()
+            
+            Spacer()
+            
+            Image("Icon")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .scaleEffect(isAnimating ? 1.05 : 1.0)
+                .opacity(isAnimating ? 1.0 : 0.8)
+                .onAppear() {
+                    withAnimation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+                        isAnimating.toggle()
+                    }
+                }
+                .frame(width: 70)
+        }
+    }
+    
+    @ViewBuilder
+    private var header: some View {
+        Text(LocalizedStringKey("Ask-User-For-Username-And-Profile-Picture-Text"))
+            .font(.system(size: 30))
+            .fontWeight(.medium)
+    }
+    
+    private var profilePicture: some View {
+        ZStack {
+            if let profileImage = setupAccountModel.profileImage {
+                Image(uiImage: profileImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 120, height: 120)
+                    .cornerRadius(10)
+                    .clipShape(Rectangle())
+                    .overlay(Rectangle().stroke(Color.white, lineWidth: 2))
+                    .transition(.scale)
+            } else {
+                Rectangle()
+                    .fill(showingImagePicker ? Color.gray.opacity(0.03) : Color.blue.opacity(0.05))
+                    .frame(width: 220, height: 220)
+                    .cornerRadius(10)
+
+                VStack {
+                    Image(systemName: "photo.on.rectangle.angled")
+                        .foregroundColor(Color.gray)
+                        .font(.system(size: 50))
+                    Text(LocalizedStringKey("Tap-To-Select-Image-Placeholder"))
+                        .foregroundColor(Color.gray)
+                        .font(.system(size: 16))
+                }
+            }
+        }
+        .padding()
+        .onTapGesture {
+            showingImagePicker = true
+        }
+        .animation(.default, value: setupAccountModel.profileImage)
+    }
+    
+    @ViewBuilder
+    private var username: some View {
+        TextField(LocalizedStringKey("Username-Placeholder"), text: $setupAccountModel.userObject.name)
+            .padding()
+            .frame(maxWidth: 350)
+            .background(Color.white.opacity(0.3))
+            .cornerRadius(15)
+            .padding(.horizontal)
+            .simultaneousGesture(TapGesture().onEnded {
+                // This gesture will not interfere with the text field
+            }
+        )
+    }
+    
+    private var navigationButtons: some View {
+        HStack {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "arrow.left") // System-provided name for a left-pointing arrow
+                    Text(LocalizedStringKey("Back-Button"))
+                }
+            }
+            .buttonStyle() // Apply any custom button style you have
+            .frame(width: 120)
+            Spacer()
+            // Navigation Link
+            NavigationLink(destination: TargetLanguageSetupView(setupAccountModel: setupAccountModel)) {
+                HStack {
+                    Text(LocalizedStringKey("Next-Button"))
+                    Image(systemName: "arrow.right")
+                }
+            }
+            .buttonStyle()
+            .frame(width: 120)
+            .disabled(!validInput)
+            .simultaneousGesture(TapGesture().onEnded {
+                validateInput()
+            })
+        }
+        .padding()
     }
     
     func validateInput() {
-        let trimmedUsername = setupViewModel.username.replacingOccurrences(of: " ", with: "")
-
+        if setupAccountModel.profileImage == nil {
+            errorMessage = NSLocalizedString("Error: Enter Profile Picture", comment: "Error: Enter Profile Picture")
+            activeAlert = .inputError
+            return
+        }
+        
+        let trimmedUsername = setupAccountModel.userObject.name.replacingOccurrences(of: " ", with: "")
+        
         if trimmedUsername.isEmpty {
-            errorMessage = NSLocalizedString("Error: Enter Username", comment: "Error: Enter Username")
+            errorMessage = NSLocalizedString("Error: Username Blank", comment: "Error: Username Blank")
             activeAlert = .inputError
             return
         }
 
         if trimmedUsername.count < 4 {
-            errorMessage = "用户名太短，请输入四个字母以上的用户名" // "The username is too short, please enter a username with more than 4 characters."
+            errorMessage = NSLocalizedString("Error: Username Too Short", comment: "Error: Username Too Short")
             activeAlert = .inputError
             return
         }
         
-        let allowedCharacterSet = CharacterSet.letters // Only letters are allowed
+        if trimmedUsername.count > 15 {
+            errorMessage = NSLocalizedString("Error: Username Too Long", comment: "Error: Username Too Long")
+            activeAlert = .inputError
+            return
+        }
+        
+        
+        let allowedCharacterSet = CharacterSet.letters
         if !trimmedUsername.unicodeScalars.allSatisfy(allowedCharacterSet.contains) {
             errorMessage = NSLocalizedString("Error: Invalid Username Characters", comment: "Error: Username contains invalid characters")
             activeAlert = .inputError
@@ -180,18 +249,18 @@ struct UsernameSetupView: View {
             activeAlert = .inputError
             return
         }
-        
-        if profileImage == nil {
-            errorMessage = NSLocalizedString("Error: Enter Profile Picture", comment: "Error: Enter Profile Picture")
-            activeAlert = .inputError
-            return
-        }
 
         // If validation passes, assign the trimmed username back to the view model
-        setupViewModel.username = setupViewModel.username.trimmingCharacters(in: .whitespacesAndNewlines)
-        setupViewModel.profileImage = inputImage
+        setupAccountModel.userObject.name = setupAccountModel.userObject.name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     private func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+struct UserNameAndProfilePictureSetupView_Previews: PreviewProvider {
+    static var previews: some View {
+        UserNameAndProfilePictureSetupView(setupAccountModel: SetupAccountModel(authManager: AuthManager()))
+            .environmentObject(AuthManager())
     }
 }

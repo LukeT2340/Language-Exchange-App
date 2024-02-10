@@ -16,7 +16,7 @@ struct ButtonModifier: ViewModifier {
             .foregroundColor(.white)
             .shadow(color: .black.opacity(0.3), radius: 3, x: 2, y: 2)
             .shadow(color: .black.opacity(0.5), radius: 4, x: -2, y: -2) // Added contrasting shadow
-            .background(Color(red: 25 / 255, green: 20 / 255, blue: 61 / 255))
+            .background(Color(red: 51/255, green: 200/255, blue: 255/255))
             .cornerRadius(40)
             .font(.body)
     }

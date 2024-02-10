@@ -61,13 +61,7 @@ struct SettingsView: View {
                  
                  Section(header: Text("Account")) {
                      Button("Log Out") {
-                         authManager.logout() { loggedOut, Error in
-                             if loggedOut {
-                                 self.presentationMode.wrappedValue.dismiss()
-                             } else {
-                                 print("Error logging out: \(String(describing: Error))")
-                             }
-                         }
+                         authManager.signOut() 
                      }
                  }
              }

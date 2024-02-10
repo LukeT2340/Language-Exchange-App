@@ -135,15 +135,12 @@ struct EmailSignUpView: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal)
-            
-            Text(authManager.errorMessage)
-                .foregroundColor(.red)
-    
+        
             Spacer()
             
             // Register Button with Right Arrow
             Button(action: {
-                authManager.registerUser(email: email, password: password)
+                authManager.emailRegister(email: email, password: password)
             }) {
                 if !authManager.isSigningUp {
                     Label(
@@ -177,9 +174,6 @@ struct EmailSignUpView: View {
         )
         // Excluding the button's frame from the tap gesture to dismiss the keyboard
         .contentShape(Rectangle())
-        .onAppear {
-            self.authManager.errorMessage = ""
-        }
         .navigationBarBackButtonHidden(true)
         
         
