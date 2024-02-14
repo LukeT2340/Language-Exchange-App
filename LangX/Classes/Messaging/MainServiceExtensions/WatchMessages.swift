@@ -83,12 +83,26 @@ extension MainService {
                             // Check if the conversation is currently open and mark the message as read
                             if self.chattingInConversationId == conversationId && message.receiverId == clientUser?.id {
                                 self.markMessageAsRead(message)
-                            } else if message.receiverId == clientUser?.id && selectedTab != 0, message.messageType == .text {
+                            } else if message.receiverId == clientUser?.id && selectedTab != 0, message.messageType != .system {
                                 let user = otherUsers.first(where: {$0.id == message.senderId})!
+                                var bannerText: String = ""
+                                switch message.messageType {
+                                case .text:
+                                    bannerText = message.textContent ?? ""
+                                case .image:
+                                    bannerText = NSLocalizedString("YouReceivedANewImage", comment: "")
+                                case .video:
+                                    bannerText = NSLocalizedString("YouReceivedANewVideo", comment: "")
+                                case .audio:
+                                    bannerText = NSLocalizedString("YouReceivedANewAudio", comment: "")
+                                default:
+                                    bannerText = NSLocalizedString("YouHaveANewMessage", comment: "")
+                                }
+                                
                                 self.banners.append(Banner(
                                     id: UUID().uuidString,
                                     title: String(format: NSLocalizedString("NewMessageFrom", comment: ""), user.name),
-                                    text: message.textContent!,
+                                    text: bannerText,
                                     linkType: .message,
                                     timeStamp: Date(),
                                     otherUserId: otherUserId,
@@ -224,7 +238,6 @@ extension MainService {
                     }
                     self.messages[otherUserId] = newMessages + currentMessages
                     self.isLoadingOlderMessages = false
-                    // Handle any UI updates here
                 }
             }
     }

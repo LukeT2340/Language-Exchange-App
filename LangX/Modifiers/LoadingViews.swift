@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+struct ListLoadingView: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            LoadingView()
+            Spacer()
+        }
+    }
+}
+
 struct LoadingView: View {
     @State private var isAnimating = false
 

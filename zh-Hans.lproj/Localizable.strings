@@ -11,9 +11,7 @@
 "App-Slogan" = "最好学习外语的平台";
 "Welcome-Message" = "欢迎来到App-Name";
 "Welcome-Slogan" = "与来自全球各地的朋友练习语言";
-"Use-Google-Button" = "通过Google登录";
-"Use-WeChat-Button" = "通过微信登录";
-"Use-Wechat-Button" = "通过微信登录";
+"Use-Wechat-Button" = "使用微信账号继续";
 "Login-Button" = "登录";
 "Phone-Number-Placeholder" = "手机号";
 "Send-Authorization-Text" = "发送验证码";
@@ -243,7 +241,7 @@
 "Hobbies-Interests-Label" = "兴趣爱好";
 "Search" = "搜索";
 "All" = "所有";
-"Following" = "我的关注";
+"Following" = "关注";
 "Near-By" = "附近";
 "Error: Not Agree Terms" = "请阅读并同意条款和条件";
 "Select-Your-Proficiency" = "您现在的%@怎么样";
@@ -284,7 +282,7 @@
 "Searching-For-User" = "正在为你找语言伙伴，找到了会通知你";
 "Is-Typing" = "正在输入";
 "NewMessageFrom" = "%@给你发了一条消息";
-"NewFollow" = "%@关注了你";
+"NewFollow" = "%@关注你了";
 "Image-Message" = "[图片]";
 "Video-Message" = "[视频]";
 "Exit" = "退出";
@@ -292,3 +290,11 @@
 "Audio-Message" = "[语音]";
 "Playback-Audio" = "播放语音";
 "Stop-Audio-Playback" = "停止播放";
+"OR" = "或者";
+"Login" = "登录";
+"Register" = "免费注册";
+"Contacts" = "通讯录";
+"NewFollowText" = "跟他打个招呼吧";
+"YouReceivedANewAudio" = "[语音]";
+"YouReceivedANewVideo" = "[视频]";
+"YouReceivedANewImage" = "[照片]";

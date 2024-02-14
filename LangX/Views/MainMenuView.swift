@@ -12,12 +12,11 @@ import Combine
 struct MainMenuView: View {
     @EnvironmentObject var authManager: AuthManager
     @StateObject var mainService: MainService
-    @StateObject var peopleService: PeopleService
     //@StateObject var noteService: NoteService
     
     init(authManager: AuthManager) {
         _mainService = StateObject(wrappedValue: MainService(authManager: authManager))
-        _peopleService = StateObject(wrappedValue: PeopleService(authManager: authManager))
+            
         /*
         if let clientUser = authManager.clientUser {
             _noteService = StateObject(wrappedValue: NoteService(targetLanguages: Array(clientUser.targetLanguages.keys), clientUserId: clientUser.id) )
@@ -37,12 +36,20 @@ struct MainMenuView: View {
     var body: some View {
         NavigationView {
             TabView(selection: $mainService.selectedTab) {
-                PeopleView(mainService: mainService, peopleService: peopleService).environmentObject(authManager)
+                PeopleView(mainService: mainService).environmentObject(authManager)
                     .tabItem {
                         Image(systemName: "person.2.fill")
-                        Text(NSLocalizedString("Discover", comment: "Discover"))
+                        Text(NSLocalizedString("Contacts", comment: "Contacs"))
                     }
                     .tag(1)
+                
+                SplashScreenView()
+                    .tabItem {
+                        Image(systemName: "text.bubble")
+                        Text(NSLocalizedString("Posts", comment: "Posts"))
+                    }
+                    .tag(2)
+                
                 
                 ConversationsView(mainService: mainService).environmentObject(authManager)
                 

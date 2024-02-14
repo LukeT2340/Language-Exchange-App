@@ -7,6 +7,7 @@
 
 import Foundation
 import AudioToolbox
+import SwiftUI
 
 // WatchFollows
 extension MainService {
@@ -44,18 +45,22 @@ extension MainService {
             guard let document = document, document.exists else {
                 return
             }
-
             do {
                 let user = try document.data(as: User.self)
-                self.banners.append(Banner(
-                    id: UUID().uuidString,
-                    title: String(format: NSLocalizedString("NewFollow", comment: ""), user.name),
-                    linkType: .follow,
-                      timeStamp: Date()
-                     ))
-                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.banners.removeFirst()
+                if !self.followedById.contains(user.id) {
+                    self.followedById.append(user.id)
+                    self.banners.append(Banner(
+                        id: UUID().uuidString,
+                        title: String(format: NSLocalizedString("NewFollow", comment: ""), user.name),
+                        text: String(format: NSLocalizedString("NewFollowText", comment: ""), user.name),
+                        linkType: .follow,
+                        timeStamp: Date(),
+                        otherUserId: user.id
+                    ))
+                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        self.banners.removeFirst()
+                    }
                 }
             } catch let error {
                 print(error)

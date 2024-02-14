@@ -152,9 +152,10 @@ class AuthManager: ObservableObject {
                 }
                 // User is signed in, update your UI accordingly
                 DispatchQueue.main.async {
-                    self?.isUserAuthenticated = true
+                    self?.firebaseUser = authResult?.user
                     self?.isAccountSetup() {result in
                         self?.isUserAccountSetupCompleted = result
+                        self?.isUserAuthenticated = true
                         self?.isLoggingIn = false
                     }
                 }

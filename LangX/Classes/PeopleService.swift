@@ -10,19 +10,17 @@ import Combine
 import FirebaseFirestore
 
 class PeopleService: ObservableObject {
-    var authManager: AuthManager
     @Published var recommendedUsers: [User] = []
     @Published var followedUsers: [User] = []
     @Published var searchText: String = ""
+    @Published var searchLanguages: [String] = []
+    @Published var isLoadingUsers = false
     private var db = Firestore.firestore()
     private var clientUser: User? = nil // changed
-    private var targetLanguages: [String] = []
     
-    init(authManager: AuthManager) {
-        self.authManager = authManager
-    }
     
     func fetchRecommendedUsers() {
+        isLoadingUsers = true
         var query: Query = db.collection("users")
 
         // Trim leading and trailing spaces from searchText
@@ -33,8 +31,8 @@ class PeopleService: ObservableObject {
             let endOfSearchText = searchTextLowercased + "\u{f8ff}"
             query = query.whereField("name_lower", isGreaterThanOrEqualTo: searchTextLowercased)
                          .whereField("name_lower", isLessThan: endOfSearchText)
-        } else {
-            query = query.whereField("nativeLanguages", arrayContainsAny: self.targetLanguages)
+        } else if !searchLanguages.isEmpty {
+            query = query.whereField("nativeLanguages", arrayContainsAny: searchLanguages)
         }
 
         query.limit(to: 20).getDocuments { (querySnapshot, err) in
@@ -55,6 +53,8 @@ class PeopleService: ObservableObject {
             
             DispatchQueue.main.async {
                 self.recommendedUsers = users
+                self.isLoadingUsers = false
+                
             }
         }
     }

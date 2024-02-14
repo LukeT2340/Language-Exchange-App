@@ -9,9 +9,9 @@ import FirebaseFirestore
 
 class SearchHelper: ObservableObject {
     private var db = Firestore.firestore()
-    @Published var searchText = ""
     @Published var users: [User] = []
     @Published var isLoadingUsers = false
+    @Published var searchText = ""
     
     func searchUsers() {
         if isLoadingUsers {

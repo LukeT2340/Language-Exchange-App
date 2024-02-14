@@ -43,7 +43,7 @@ struct LangX: App {
         case (false, true, false):
             SetupAccountView()
         case (false, false, _):
-            LoginMenuView()
+            IndexView()
         }
     }
 }

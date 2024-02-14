@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C2157932B787A0D003784EE /* IndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2157922B787A0D003784EE /* IndexView.swift */; };
+		8C2157952B787CD3003784EE /* RegisterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2157942B787CD3003784EE /* RegisterMenuView.swift */; };
+		8C2157992B788327003784EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C2157982B788327003784EE /* GoogleService-Info.plist */; };
 		8CB9D6742B761A25007FE449 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB9D6732B761A25007FE449 /* GoogleSignIn */; };
 		8CB9D6762B761A25007FE449 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8CB9D6752B761A25007FE449 /* GoogleSignInSwift */; };
-		8CB9D6792B776123007FE449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CB9D6782B776123007FE449 /* GoogleService-Info.plist */; };
 		8CB9D67B2B7768C3007FE449 /* SetupAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D67A2B7768C3007FE449 /* SetupAccountModel.swift */; };
 		8CB9D67D2B7768ED007FE449 /* Hobby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D67C2B7768ED007FE449 /* Hobby.swift */; };
 		8CB9D6822B776C27007FE449 /* NativeLanguageSelectableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D67F2B776C27007FE449 /* NativeLanguageSelectableRow.swift */; };
@@ -62,14 +64,14 @@
 		8CE5317F2B51E06B003F9DF9 /* LanguageGoalsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531222B51E06B003F9DF9 /* LanguageGoalsSetupView.swift */; };
 		8CE531802B51E06B003F9DF9 /* SexAndBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531232B51E06B003F9DF9 /* SexAndBirthdayView.swift */; };
 		8CE531812B51E06B003F9DF9 /* NativeLanguageSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531242B51E06B003F9DF9 /* NativeLanguageSetupView.swift */; };
-		8CE531832B51E06B003F9DF9 /* UsernameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531262B51E06B003F9DF9 /* UsernameSetupView.swift */; };
+		8CE531832B51E06B003F9DF9 /* UsernameAndProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531262B51E06B003F9DF9 /* UsernameAndProfileSetupView.swift */; };
 		8CE531842B51E06B003F9DF9 /* TargetLanguageSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531272B51E06B003F9DF9 /* TargetLanguageSetupView.swift */; };
 		8CE531852B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531282B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift */; };
 		8CE531862B51E06B003F9DF9 /* EmailInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE5312A2B51E06B003F9DF9 /* EmailInputView.swift */; };
 		8CE531872B51E06B003F9DF9 /* SetupAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE5312B2B51E06B003F9DF9 /* SetupAccountView.swift */; };
 		8CE531882B51E06B003F9DF9 /* EmailSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE5312C2B51E06B003F9DF9 /* EmailSignUpView.swift */; };
 		8CE531892B51E06B003F9DF9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE5312E2B51E06B003F9DF9 /* LoginView.swift */; };
-		8CE5318A2B51E06B003F9DF9 /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531302B51E06B003F9DF9 /* ConversationView.swift */; };
+		8CE5318A2B51E06B003F9DF9 /* ConversationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531302B51E06B003F9DF9 /* ConversationsView.swift */; };
 		8CE5318B2B51E06B003F9DF9 /* SearchUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531322B51E06B003F9DF9 /* SearchUsersView.swift */; };
 		8CE5318C2B51E06B003F9DF9 /* VoiceInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531332B51E06B003F9DF9 /* VoiceInputView.swift */; };
 		8CE5318D2B51E06B003F9DF9 /* UsefulViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE531342B51E06B003F9DF9 /* UsefulViews.swift */; };
@@ -111,8 +113,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8C2157922B787A0D003784EE /* IndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexView.swift; sourceTree = "<group>"; };
+		8C2157942B787CD3003784EE /* RegisterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMenuView.swift; sourceTree = "<group>"; };
+		8C2157982B788327003784EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8CB9D6772B761EE9007FE449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8CB9D6782B776123007FE449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8CB9D67A2B7768C3007FE449 /* SetupAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetupAccountModel.swift; path = ../../../SpeakSwap/SpeakSwap/Classes/SetupAccountModel.swift; sourceTree = "<group>"; };
 		8CB9D67C2B7768ED007FE449 /* Hobby.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hobby.swift; sourceTree = "<group>"; };
 		8CB9D67F2B776C27007FE449 /* NativeLanguageSelectableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeLanguageSelectableRow.swift; sourceTree = "<group>"; };
@@ -168,14 +172,14 @@
 		8CE531222B51E06B003F9DF9 /* LanguageGoalsSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageGoalsSetupView.swift; sourceTree = "<group>"; };
 		8CE531232B51E06B003F9DF9 /* SexAndBirthdayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SexAndBirthdayView.swift; sourceTree = "<group>"; };
 		8CE531242B51E06B003F9DF9 /* NativeLanguageSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeLanguageSetupView.swift; sourceTree = "<group>"; };
-		8CE531262B51E06B003F9DF9 /* UsernameSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameSetupView.swift; sourceTree = "<group>"; };
+		8CE531262B51E06B003F9DF9 /* UsernameAndProfileSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameAndProfileSetupView.swift; sourceTree = "<group>"; };
 		8CE531272B51E06B003F9DF9 /* TargetLanguageSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetLanguageSetupView.swift; sourceTree = "<group>"; };
 		8CE531282B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HobbiesAndInterestsSetupView.swift; sourceTree = "<group>"; };
 		8CE5312A2B51E06B003F9DF9 /* EmailInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailInputView.swift; sourceTree = "<group>"; };
 		8CE5312B2B51E06B003F9DF9 /* SetupAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupAccountView.swift; sourceTree = "<group>"; };
 		8CE5312C2B51E06B003F9DF9 /* EmailSignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpView.swift; sourceTree = "<group>"; };
 		8CE5312E2B51E06B003F9DF9 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		8CE531302B51E06B003F9DF9 /* ConversationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
+		8CE531302B51E06B003F9DF9 /* ConversationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsView.swift; sourceTree = "<group>"; };
 		8CE531322B51E06B003F9DF9 /* SearchUsersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUsersView.swift; sourceTree = "<group>"; };
 		8CE531332B51E06B003F9DF9 /* VoiceInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceInputView.swift; sourceTree = "<group>"; };
 		8CE531342B51E06B003F9DF9 /* UsefulViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsefulViews.swift; sourceTree = "<group>"; };
@@ -261,7 +265,7 @@
 		8CE530CD2B51DFEE003F9DF9 = {
 			isa = PBXGroup;
 			children = (
-				8CB9D6782B776123007FE449 /* GoogleService-Info.plist */,
+				8C2157982B788327003784EE /* GoogleService-Info.plist */,
 				8CE531C62B51E958003F9DF9 /* Localizable.strings */,
 				8CE530D82B51DFEE003F9DF9 /* LangX */,
 				8CE530D72B51DFEE003F9DF9 /* Products */,
@@ -330,6 +334,7 @@
 				8CE530FE2B51E06B003F9DF9 /* CallUIViewRepresentable.swift */,
 				8CE531C72B51ED05003F9DF9 /* AuthManager.swift */,
 				8CE531042B51E06B003F9DF9 /* ReplyService.swift */,
+				8CE531062B51E06B003F9DF9 /* MainService.swift */,
 				8CE531052B51E06B003F9DF9 /* Messaging */,
 				8CB9D67A2B7768C3007FE449 /* SetupAccountModel.swift */,
 				8CE531172B51E06B003F9DF9 /* MessageHelperModel.swift */,
@@ -340,7 +345,6 @@
 		8CE531052B51E06B003F9DF9 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
-				8CE531062B51E06B003F9DF9 /* MainService.swift */,
 				8CE531072B51E06B003F9DF9 /* MainServiceExtensions */,
 			);
 			path = Messaging;
@@ -375,7 +379,6 @@
 				8CE5311B2B51E06B003F9DF9 /* SplashScreenView.swift */,
 				8CE5311C2B51E06B003F9DF9 /* LoginMenuSubviews */,
 				8CE5312F2B51E06B003F9DF9 /* MainMenuSubviews */,
-				8CE531482B51E06B003F9DF9 /* LoginMenuView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -411,7 +414,7 @@
 				8CB9D6802B776C27007FE449 /* TargetLanguageSetupSubviews */,
 				8CE531222B51E06B003F9DF9 /* LanguageGoalsSetupView.swift */,
 				8CE531242B51E06B003F9DF9 /* NativeLanguageSetupView.swift */,
-				8CE531262B51E06B003F9DF9 /* UsernameSetupView.swift */,
+				8CE531262B51E06B003F9DF9 /* UsernameAndProfileSetupView.swift */,
 				8CE531272B51E06B003F9DF9 /* TargetLanguageSetupView.swift */,
 				8CE531282B51E06B003F9DF9 /* HobbiesAndInterestsSetupView.swift */,
 			);
@@ -429,7 +432,10 @@
 		8CE5312D2B51E06B003F9DF9 /* LoginViews */ = {
 			isa = PBXGroup;
 			children = (
+				8CE531482B51E06B003F9DF9 /* LoginMenuView.swift */,
+				8C2157942B787CD3003784EE /* RegisterMenuView.swift */,
 				8CE5312E2B51E06B003F9DF9 /* LoginView.swift */,
+				8C2157922B787A0D003784EE /* IndexView.swift */,
 			);
 			path = LoginViews;
 			sourceTree = "<group>";
@@ -437,7 +443,7 @@
 		8CE5312F2B51E06B003F9DF9 /* MainMenuSubviews */ = {
 			isa = PBXGroup;
 			children = (
-				8CE531302B51E06B003F9DF9 /* ConversationView.swift */,
+				8CE531302B51E06B003F9DF9 /* ConversationsView.swift */,
 				8CE531312B51E06B003F9DF9 /* ConversationSubViews */,
 				8CE5313D2B51E06B003F9DF9 /* PeopleView.swift */,
 				8CE5313E2B51E06B003F9DF9 /* NotesSubView */,
@@ -595,8 +601,8 @@
 			files = (
 				8CE530E22B51DFF0003F9DF9 /* Preview Assets.xcassets in Resources */,
 				8CE531C42B51E958003F9DF9 /* Localizable.strings in Resources */,
-				8CB9D6792B776123007FE449 /* GoogleService-Info.plist in Resources */,
 				8CE530DE2B51DFF0003F9DF9 /* Assets.xcassets in Resources */,
+				8C2157992B788327003784EE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,7 +613,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CE531832B51E06B003F9DF9 /* UsernameSetupView.swift in Sources */,
+				8CE531832B51E06B003F9DF9 /* UsernameAndProfileSetupView.swift in Sources */,
 				8CE5317D2B51E06B003F9DF9 /* CallUIView.swift in Sources */,
 				8CE531872B51E06B003F9DF9 /* SetupAccountView.swift in Sources */,
 				8CE531742B51E06B003F9DF9 /* HandleVideos.swift in Sources */,
@@ -658,8 +664,9 @@
 				8CE531862B51E06B003F9DF9 /* EmailInputView.swift in Sources */,
 				8CE5316D2B51E06B003F9DF9 /* ModifyMessages.swift in Sources */,
 				8CE531782B51E06B003F9DF9 /* MessageHelperModel.swift in Sources */,
-				8CE5318A2B51E06B003F9DF9 /* ConversationView.swift in Sources */,
+				8CE5318A2B51E06B003F9DF9 /* ConversationsView.swift in Sources */,
 				8CE531962B51E06B003F9DF9 /* PeopleView.swift in Sources */,
+				8C2157932B787A0D003784EE /* IndexView.swift in Sources */,
 				8CE531512B51E06B003F9DF9 /* Reply.swift in Sources */,
 				8CE531A02B51E06B003F9DF9 /* LoginMenuButtonModifier.swift in Sources */,
 				8CE5319D2B51E06B003F9DF9 /* LoginMenuView.swift in Sources */,
@@ -682,6 +689,7 @@
 				8CE5319E2B51E06B003F9DF9 /* BannerView.swift in Sources */,
 				8CE531532B51E06B003F9DF9 /* NoteLike.swift in Sources */,
 				8CE5314F2B51E06B003F9DF9 /* NoteComment.swift in Sources */,
+				8C2157952B787CD3003784EE /* RegisterMenuView.swift in Sources */,
 				8CE5316F2B51E06B003F9DF9 /* SendTextMessages.swift in Sources */,
 				8CE531592B51E06B003F9DF9 /* NoteService.swift in Sources */,
 				8CE531992B51E06B003F9DF9 /* NotesView.swift in Sources */,

@@ -25,6 +25,7 @@ struct SexAndBirthdaySetupView: View {
         VStack (alignment: .center, spacing: 10) {
             navigationBar
             header
+            Spacer()
             sexPicker
             birthdayPicker
             Spacer()
@@ -46,11 +47,6 @@ struct SexAndBirthdaySetupView: View {
                 return Alert(title: Text(NSLocalizedString("Error-Alert", comment: "Error")), message: Text(errorMessage), dismissButton: .default(Text("OK")))
             }
         }
-        .background(
-            colorScheme == .dark ?
-                LinearGradient(gradient: Gradient(colors: [Color(red: 0.22, green: 0.22, blue: 0.24), Color(red: 0.28, green: 0.28, blue: 0.30)]), startPoint: .top, endPoint: .bottom) :
-                LinearGradient(gradient: Gradient(colors: [Color(red: 0.95, green: 0.95, blue: 0.98), Color(red: 0.88, green: 0.88, blue: 0.92)]), startPoint: .top, endPoint: .bottom)
-        )
     }
     private var navigationBar: some View {
         HStack {
@@ -73,31 +69,23 @@ struct SexAndBirthdaySetupView: View {
                 .fontWeight(.medium)
 
             Spacer()
-            Image("Icon")
+            Image(systemName: "xmark")
                 .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-                .scaleEffect(isAnimating ? 1.05 : 1.0)
-                .opacity(isAnimating ? 1.0 : 0.8)
-                .onAppear() {
-                    withAnimation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
-                        isAnimating.toggle()
-                    }
-                }
+                .frame(width: 20, height: 20)
+                .foregroundColor(.primary)
                 .frame(width: 70)
+                .hidden()
+
         }
     }
     
     @ViewBuilder
     private var header: some View {
-        Text(LocalizedStringKey("Registration-Successful-Text"))
-            .font(.system(size: 20))
-            .fontWeight(.medium)
-        
         Text(LocalizedStringKey("Setup-Account-Text"))
-            .font(.system(size: 15))
+            .font(.system(size: 20))
             .fontWeight(.light)
-            .padding(.bottom, 10)
+            .padding(.horizontal)
+            .padding(.vertical)
     }
     
     @ViewBuilder
@@ -106,30 +94,17 @@ struct SexAndBirthdaySetupView: View {
             .font(.system(size: 18))
             .fontWeight(.medium)
 
-        VStack {
+        HStack {
             ForEach(setupAccountModel.localizedSexOptions, id: \.self) { localizedOption in
                 Button(action: {
                     selectedSex = localizedOption
                     setupAccountModel.selectSex(localizedSelection: localizedOption)
                 }) {
                     HStack {
-                        Image(imageNameForLocalizedOption(localizedOption))
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(selectedSex == localizedOption ? Color(red: 16/255, green: 219/255, blue: 211/255) : .gray)
-                            .hidden()
-                        
                         Text(localizedOption)
-                            .font(.system(size: 20))
-                            .foregroundColor(selectedSex == localizedOption ? Color(red: 16/255, green: 219/255, blue: 211/255) : .gray)
-                        
-                        Image(imageNameForLocalizedOption(localizedOption))
-                            .resizable()
-                            .frame(width: 20, height: 20)
                             .foregroundColor(selectedSex == localizedOption ? Color(red: 16/255, green: 219/255, blue: 211/255) : .gray)
                     }
                     .padding()
-                    .frame(minWidth: 200, maxHeight: 40)
                     .background(selectedSex == localizedOption ? Color(red: 0.39, green: 0.58, blue: 0.93).opacity(0.2) : Color.gray.opacity(0.2))
                     .cornerRadius(10)
                 }
