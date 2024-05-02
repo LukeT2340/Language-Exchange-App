@@ -10,6 +10,9 @@ import AVFoundation
 import Speech
 import SwiftUI
 
+/*
+ Used for recording, storing and playing voice messages
+ */
 class VoiceRecorder: NSObject, ObservableObject, AVAudioPlayerDelegate {
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
@@ -20,6 +23,7 @@ class VoiceRecorder: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var lastRecordingURL: URL?
     @Published var lastRecordingDuration: TimeInterval?
 
+    // Sets the path for the new recording and starts recording
     func startRecording() {
         let recordingName = "\(UUID().uuidString).m4a"
           let filePath = getDocumentsDirectory().appendingPathComponent(recordingName)
@@ -40,70 +44,48 @@ class VoiceRecorder: NSObject, ObservableObject, AVAudioPlayerDelegate {
               audioRecorder?.prepareToRecord()
               audioRecorder?.record()
               isRecording = true
-              print("Simplified recording started")
-
           } catch {
               print("Simplified recording failed: \(error)")
           }
       }
 
-    func setupRecorder(completion: @escaping (Bool) -> Void) {
-        let recordingName = "\(Date().timeIntervalSince1970).m4a"
-        let filePath = getDocumentsDirectory().appendingPathComponent(recordingName)
-
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 44100,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ] as [String: Any]
-
-        do {
-            audioRecorder = try AVAudioRecorder(url: filePath, settings: settings)
-            audioRecorder?.prepareToRecord()
-            completion(true)
-        } catch {
-            print("Failed to set up the audio recorder: \(error)")
-            completion(false)
-        }
-    }
-
+    // Returns the documents directory
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
 
+    // Stops recording
     func stopRecording() {
         audioRecorder?.stop()
         isRecording = false
         lastRecordingURL = audioRecorder?.url
         
-        // Debug: Check the file immediately after recording
         if let url = lastRecordingURL {
             do {
                 let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
                 let fileSize = attributes[.size] as? UInt64
                 let duration = getAudioDuration(url: url)
+                
+                // Make sure recording isn't too short or too long
                 if duration < 1 || duration > 60 {
-                    print("duration too long or too short")
                     lastRecordingURL = nil
                 } else {
                     lastRecordingDuration = duration
                 }
-                print("File size after recording: \(fileSize ?? 0) bytes")
             } catch {
                 print("Error getting file size: \(error)")
             }
         }
     }
         
+    // Used to play the recording that was just recorded back to the user
     func playRecording() {
         guard let url = lastRecordingURL else {
             print("No recording URL found")
             return
         }
 
-        // Debug: Check the file size
         do {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
             let fileSize = attributes[.size] as? UInt64
@@ -112,7 +94,6 @@ class VoiceRecorder: NSObject, ObservableObject, AVAudioPlayerDelegate {
             print("Error getting file size: \(error)")
         }
 
-        // Debug: Check the audio duration
         let duration = getAudioDuration(url: url)
         print("Audio Duration: \(duration) seconds")
 
@@ -130,16 +111,13 @@ class VoiceRecorder: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-            audioPlayer?.stop()
-           isPlaying = false
-       }
-
+    // Stops playing the recording
     func stopPlaying() {
         audioPlayer?.stop()
         isPlaying = false
     }
 
+    // Takes the local URL of the audio file and returns its duration
     func getAudioDuration(url: URL) -> TimeInterval {
         let asset = AVAsset(url: url)
         return CMTimeGetSeconds(asset.duration)

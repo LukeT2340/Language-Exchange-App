@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import FirebaseFirestore
 
+// Used to fetch recommended and followed users.
 class PeopleService: ObservableObject {
     @Published var recommendedUsers: [User] = []
     @Published var followedUsers: [User] = []
@@ -16,16 +17,16 @@ class PeopleService: ObservableObject {
     @Published var searchLanguages: [String] = []
     @Published var isLoadingUsers = false
     private var db = Firestore.firestore()
-    private var clientUser: User? = nil // changed
+    private var clientUser: User? = nil
     
-    
+    // Fetches recommended users
     func fetchRecommendedUsers() {
         isLoadingUsers = true
         var query: Query = db.collection("users")
 
-        // Trim leading and trailing spaces from searchText
         let trimmedSearchText = searchText.trimmingCharacters(in: .whitespaces)
 
+        // If the user has ended text into the search field, we find users based on this text. Else we search for users based off of the searched languages
         if !trimmedSearchText.isEmpty {
             let searchTextLowercased = trimmedSearchText.lowercased()
             let endOfSearchText = searchTextLowercased + "\u{f8ff}"
@@ -59,13 +60,13 @@ class PeopleService: ObservableObject {
         }
     }
     
+    // Used to fetch users that the client user is following
     func fetchFollowedUsers() {
         guard let clientUser = clientUser else {
              print("Client user is not available")
              return
          }
 
-         // Fetch follow relationships where clientUser is the follower
          db.collection("follows")
             .whereField("followerUserId", isEqualTo: clientUser.id)
            .getDocuments { [weak self] (snapshot, error) in
@@ -80,21 +81,18 @@ class PeopleService: ObservableObject {
                  return
              }
 
-             // Clear the current followedUsers array
              self.followedUsers.removeAll()
 
-             // Fetch each followed user's data
              for document in documents {
                  let followedUserId = document.data()["followedUserId"] as? String ?? ""
                  
-                 // Fetch the user profile for each followed user
                  self.db.collection("users").document(followedUserId).getDocument { (userSnapshot, userError) in
                      guard let snapshot = userSnapshot, snapshot.exists,
                            let updatedClientUser = try? snapshot.data(as: User.self) else {
                          print("Client user document snapshot is nil or doesn't exist.")
                          return
                      }
-                     // Update the clientUser object
+
                      DispatchQueue.main.async {
                          self.followedUsers.append(updatedClientUser)
                      }

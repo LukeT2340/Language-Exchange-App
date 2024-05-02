@@ -12,12 +12,11 @@ struct ButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()
-            .frame(maxWidth: 300, maxHeight: 50)
-            .foregroundColor(.white)
-            .background(Color(red: 51/255, green: 200/255, blue: 255/255))
-            .cornerRadius(8)
-            .font(.body)
-    
+            .background(.white)
+            .cornerRadius(20)
+            .font(.system(size: 18))
+            .foregroundColor(Color("AccentColor"))
+            .lineLimit(1)
     }
 }
 

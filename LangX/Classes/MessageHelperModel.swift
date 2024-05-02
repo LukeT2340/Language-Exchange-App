@@ -9,9 +9,11 @@ import FirebaseFirestore
 import AudioToolbox
 import FirebaseStorage
 
+// Contains additional functions that are used in the ChatView
 class MessageHelperModel: ObservableObject {
     private var db = Firestore.firestore()
 
+    // Takes a date and converts it to a user friendly localized string
     func formatDate(_ date: Date) -> String {
         let calendar = Calendar.current
         let now = Date()
@@ -44,7 +46,7 @@ class MessageHelperModel: ObservableObject {
         }
     }
 
-    // Functions to handle actions
+    // Translates text using google translate
     func translateMessage(text: String, completion: @escaping (String?) -> Void) {
         let apiKey = ProcessInfo.processInfo.environment["Google-API-KEY"] ?? "No API Key"
         let url = "https://translation.googleapis.com/language/translate/v2?key=\(apiKey)"
@@ -89,15 +91,16 @@ class MessageHelperModel: ObservableObject {
         task.resume()
     }
     
+    // Timestamps should only be shown when the current message and previous message are 5 or more minutes apart
     func shouldShowTimestamp(currentMessage: Message, previousMessage: Message?) -> Bool {
         guard let previousTimestamp = previousMessage?.timestamp else {
             return true // Always show for the first message
         }
-        // Example logic: show timestamp if messages are more than 15 minutes apart
         let timeDifference = currentMessage.timestamp.timeIntervalSince(previousTimestamp)
         return timeDifference > 5 * 60
     }
     
+    // Hides keyboard
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }

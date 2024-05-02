@@ -13,6 +13,7 @@ import Photos
 import TLPhotoPicker
 
 class MainService: ObservableObject {
+    @AppStorage("selectedTab") var selectedTab: Tab = .messages
     var db = Firestore.firestore()
     var storage = Storage.storage().reference()
     var initializationTime: Date
@@ -23,6 +24,7 @@ class MainService: ObservableObject {
     var userListeners: [String: ListenerRegistration] = [:]
     var followerListener: ListenerRegistration?
     var languagePartnerListener: ListenerRegistration?
+    
     @Published var messages: [String: [Message]] = [:] {
         didSet {
             updateBadgeCount()
@@ -36,7 +38,6 @@ class MainService: ObservableObject {
     @Published var authManager: AuthManager
     @Published var automaticallyTranslateMessages = false
     @Published var hasSetupCompleted = false
-    @Published var selectedTab = 0
     @Published var showingVoiceMessageUI: Bool = false
     
     // Users
@@ -46,6 +47,7 @@ class MainService: ObservableObject {
     
     @Published var clientUser: User? = nil
     @Published var otherUsers: [User] = []
+    @Published var unseenFollows: [Follow] = []
     var isRemovalScheduled = false
     
     // Follows
@@ -122,6 +124,8 @@ class MainService: ObservableObject {
                         // Handle anything else you need to do after all messages have been fetched
                     }
                 }
+            } else {
+                print("client user not found")
             }
         }
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Used to track whether the keyboard is open or not
 class KeyboardResponder: ObservableObject {
     private var notificationCenter: NotificationCenter
     @Published var isVisible: Bool = false

@@ -13,7 +13,9 @@ import FirebaseAuth
 import GoogleSignIn
 import AuthenticationServices
 import CryptoKit
+import Combine
 
+// Used as an environmental variable throughout the app to track the login status of the user
 class AuthManager: ObservableObject {
     @Published var isSigningUp: Bool = false
     @Published var isUserAuthenticated: Bool = false
@@ -26,7 +28,13 @@ class AuthManager: ObservableObject {
     @Published var isPhoneNumberBound: Bool = true // for testing
     private var db = Firestore.firestore()
     private var onlineStatusTimer: Timer?
+    @Published var isSendCodeButtonDisabled: Bool = false
+    @Published var countdown: Int = 60
+    private var verificationID: String?
+    private var timer: AnyCancellable?
     
+    static let shared = AuthManager()
+
     init() {
         self.isAppInitializing = true
         self.firebaseUser = Auth.auth().currentUser
@@ -48,81 +56,81 @@ class AuthManager: ObservableObject {
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
-    
+    // This function is called when the user re-opens the app.
     @objc private func appMovedToForeground() {
-        print("App is back to foreground")
-        updateLastOnline()
-        startOnlineStatusUpdates()
+        updateLastOnline() // Updates the user's lastOnline field in firebase
+        startOnlineStatusUpdates() // Continue to periodically update lastOnline
     }
-    
     
     @objc private func appMovedToBackground() {
-        // Code to execute when the app goes to background
-        print("App moved to background")
-        // Call any functions you need here, such as updateLastOnline
-        stopOnlineStatusUpdates()
+        stopOnlineStatusUpdates() // Stop last online status updates
     }
- 
-    func emailLogin(email: String, password: String) {
+    
+    // Once the mobile authentication code is sent, we start this timer
+    private func startSendCodeCooldown() {
+        isSendCodeButtonDisabled = true
+        countdown = 60
+
+        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                if self.countdown > 0 {
+                    self.countdown -= 1
+                } else {
+                    self.isSendCodeButtonDisabled = false
+                    self.timer?.cancel()
+                }
+            }
+    }
+    
+    // Send one time password to the user's phone number
+    func sendOTP(phoneNumber: String, completion: @escaping (Error?) -> Void) {
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+            if let error = error {
+                print("Error verifying phone number:", error.localizedDescription)
+                completion(error)
+                return
+            }
+            
+            guard let verificationID = verificationID else {
+                let error = NSError(domain: "Verification", code: -1, userInfo: [NSLocalizedDescriptionKey: "Verification ID is nil"])
+                print("Error verifying phone number: Verification ID is nil")
+                completion(error)
+                return
+            }
+            
+            self.verificationID = verificationID
+            self.startSendCodeCooldown()
+            completion(nil)
+        }
+    }
+
+    // Check to see if the entered OTP is correct. Then logs the user in if it is correct.
+    func verifyOTP(otp: String, completion: @escaping (Error?) -> Void) {
+        guard let verificationID = verificationID else {
+            completion(FirebaseAuthError.missingVerificationID)
+            return
+        }
         isLoggingIn = true
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-                if let user = authResult?.user {
-                    print(user.uid)
-                    self?.firebaseUser = user
-                    DispatchQueue.main.async {
-                        self?.checkIfAccountIsSetup() {
-                            self?.isUserAuthenticated = true
-                            self?.isLoggingIn = false
-                        }
-                    }
-                }
-            self?.isLoggingIn = false
-        }
-    }
-    
-    // Email Validation Function
-    func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: email)
-    }
-
-    // Password Complexity Validation Function
-    func isPasswordComplex(_ password: String) -> Bool {
-        // Example: Password should be at least 8 characters, including uppercase, lowercase, number, and special character
-        let passwordRegEx = "(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$&*]).{8,}"
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
-        return passwordTest.evaluate(with: password)
-    }
-    
-    func emailRegister(email: String, password: String) {
-        isSigningUp = true
-        // Validate Email
-        guard isValidEmail(email) else {
-            isSigningUp = false
-            return
-        }
-
-        // Validate Password Complexity
-        guard isPasswordComplex(password) else {
-            isSigningUp = false
-            return
-        }
-
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
-            DispatchQueue.main.async {
-                if let user = authResult?.user {
-                    // Handle successful registration
-                    self?.firebaseUser = user
-                    self?.isUserAuthenticated = true
-                    self?.checkIfAccountIsSetup() {
-                        self?.isSigningUp = false
-                    }
-                }
+        
+        let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: otp)
+        
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+                completion(error)
+                self.isLoggingIn = false
+                print(error.localizedDescription)
+                return
+            }
+            self.checkIfAccountIsSetup {
+                self.isUserAuthenticated = true
+                self.isLoggingIn = false
+                completion(nil)
             }
         }
     }
     
+    // Handle google sign-in
     func signInWithGoogle(presentingViewController: UIViewController) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
@@ -163,12 +171,14 @@ class AuthManager: ObservableObject {
         }
     }
 
+    // Handle sign in with app request
     func signInWithAppleRequest(_ request: ASAuthorizationOpenIDRequest) {
         nonce = randomNonceString()
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(nonce)
     }
     
+    // Handle sign in with app completion
     func signInWithAppleCompletion(_ result: Result<ASAuthorization, Error>) {
         isLoggingIn = true
         switch result {
@@ -210,6 +220,7 @@ class AuthManager: ObservableObject {
         }
     }
     
+    // Sign user out
     func signOut() {
         guard !isLoggingOut else { return }
         isLoggingOut = true
@@ -226,7 +237,6 @@ class AuthManager: ObservableObject {
                 self.isLoggingOut = false
             }
             
-            print("User signed out successfully.")
         } catch let signOutError as NSError {
             // Handle the error
             print("Error signing out: \(signOutError.localizedDescription)")
@@ -234,16 +244,19 @@ class AuthManager: ObservableObject {
         }
     }
 
+    // Updates the user's lastOnline field in firebase every 30 seconds
     func startOnlineStatusUpdates() {
         onlineStatusTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             self?.updateLastOnline()
         }
     }
     
+    // Stops last online status updates
     func stopOnlineStatusUpdates() {
         onlineStatusTimer?.invalidate()
     }
     
+    // Updates the user's lastOnline field in firebase
     func updateLastOnline() {
         guard let userID = firebaseUser?.uid, isUserAccountSetupCompleted else {
             print("No current user found or account setup not completed")
@@ -269,78 +282,25 @@ class AuthManager: ObservableObject {
             }
         }
     }
-
-
-    // Function to send a verification code to the user's phone
-    func startAuth(countryCode: String, phoneNumber: String, completion: @escaping (Result<String, Error>) -> Void) {
-        // Ensure the country code starts with '+'
-        let formattedCountryCode = countryCode.hasPrefix("+") ? countryCode : "+\(countryCode)"
-        
-        // Remove leading zeros from phone number
-        let trimmedPhoneNumber = phoneNumber.trimmingCharacters(in: CharacterSet(charactersIn: "0"))
-        
-        // Combine country code and phone number
-        let fullPhoneNumber = formattedCountryCode + trimmedPhoneNumber
-        print("startAuth called with phoneNumber: \(fullPhoneNumber)")
-
-        // Send verification code using Firebase
-        PhoneAuthProvider.provider().verifyPhoneNumber(fullPhoneNumber, uiDelegate: nil) { verificationID, error in
-            print("Firebase response received") // Debugging line
-            if let error = error {
-                print("Error: \(error.localizedDescription)") // Debugging line
-                completion(.failure(error))
-            } else if let verificationID = verificationID {
-                print("Verification ID: \(verificationID)") // Debugging line
-                completion(.success(verificationID))
-            } else {
-                print("Unexpected scenario encountered") // Debugging line
-                completion(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unknown error occurred"])))
-            }
+    
+    // Checks to see if the user has setup their account (username, languages, bio, etc)
+    func checkIfAccountIsSetup(completion: @escaping () -> Void) {
+        guard let firebaseUser = Auth.auth().currentUser else {
+            self.isUserAccountSetupCompleted = false
+            completion()
+            return
         }
-    }
-
-    func sendVerificationCode(phoneNumber: String) {
-        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { (verificationID, error) in
-            if let error = error {
-                print("Error occurred: \(error.localizedDescription)")
-                return
+        
+        isAccountSetup() { result in
+            self.isUserAccountSetupCompleted = result
+            if result {
+                self.startOnlineStatusUpdates()
             }
-            guard let verificationID = verificationID else {
-                print("Verification ID not received.")
-                return
-            }
-            print("Verification ID: \(verificationID)")
-            UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+            completion()
         }
     }
     
-    // Function to verify the code entered by the user
-    func verifyCode(verificationCode: String) {
-        guard let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") else { return }
-
-        let credential = PhoneAuthProvider.provider().credential(
-            withVerificationID: verificationID,
-            verificationCode: verificationCode
-        )
-
-        Auth.auth().signIn(with: credential) { (authResult, error) in
-            if let error = error {
-                // Handle the error
-                print(error.localizedDescription)
-                return
-            }
-            
-            self.firebaseUser = authResult?.user
-            DispatchQueue.main.async {
-                self.checkIfAccountIsSetup() {
-                    self.isUserAuthenticated = true
-                    self.isLoggingIn = false
-                }
-            }
-        }
-    }
-
-    func isAccountSetup(completion: @escaping (Bool) -> Void) {
+    private func isAccountSetup(completion: @escaping (Bool) -> Void) {
         guard let firebaseUser = Auth.auth().currentUser else {
             completion(false)
             return
@@ -360,22 +320,6 @@ class AuthManager: ObservableObject {
             }
         }
 
-    }
-    
-    func checkIfAccountIsSetup(completion: @escaping () -> Void) {
-        guard let firebaseUser = Auth.auth().currentUser else {
-            self.isUserAccountSetupCompleted = false
-            completion()
-            return
-        }
-        
-        isAccountSetup() { result in
-            self.isUserAccountSetupCompleted = result
-            if result {
-                self.startOnlineStatusUpdates()
-            }
-            completion()
-        }
     }
 }
 
@@ -411,5 +355,9 @@ extension AuthManager {
       return String(nonce)
     }
 
+}
+
+enum FirebaseAuthError: Error {
+    case missingVerificationID
 }
 

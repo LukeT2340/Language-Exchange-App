@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "cool-profile-picture-87h46gcobjl5e4xu.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "cool-profile-picture-87h46gcobjl5e4xu 1.jpg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "cool-profile-picture-87h46gcobjl5e4xu 2.jpg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

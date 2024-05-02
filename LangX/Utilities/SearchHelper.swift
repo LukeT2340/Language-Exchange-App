@@ -7,18 +7,20 @@
 
 import FirebaseFirestore
 
+// Used to search for other users on the app
 class SearchHelper: ObservableObject {
     private var db = Firestore.firestore()
     @Published var users: [User] = []
     @Published var isLoadingUsers = false
     @Published var searchText = ""
     
+    // Search for users with name or id that contains the searchText
     func searchUsers() {
         if isLoadingUsers {
             return
         }
         isLoadingUsers = true
-        print("Loading users")
+        users = []
         let trimmedSearchText = searchText.trimmingCharacters(in: .whitespaces)
         guard !trimmedSearchText.isEmpty else {
             isLoadingUsers = false
@@ -72,10 +74,10 @@ class SearchHelper: ObservableObject {
         }
     }
 
-    func fetchUsers(from query: Query, completion: @escaping ([User]) -> Void) {
+    // Used by the searchUsers function to query specific fields in the users database.
+    private func fetchUsers(from query: Query, completion: @escaping ([User]) -> Void) {
         query.getDocuments { (querySnapshot, err) in
             guard let documents = querySnapshot?.documents, err == nil else {
-                print("Error getting documents: \(String(describing: err))")
                 DispatchQueue.main.async {
                     self.isLoadingUsers = false
                 }

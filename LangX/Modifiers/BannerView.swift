@@ -8,6 +8,7 @@
 import SwiftUI
 import Kingfisher
 
+// In-APP notifications
 struct BannerView: View {
     @ObservedObject var mainService: MainService
     let banner: Banner?
