@@ -1,4 +1,4 @@
-### XChange Language Exchange App
+### XChange Language Exchange App (Not yet complete)
 Overview:
 XChange is a Language Exchange app built using SwiftUI and Firebase.<div style="display: flex; flex-wrap: wrap; justify-content: center;">
 
